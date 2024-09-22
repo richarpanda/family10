@@ -1,54 +1,28 @@
-# Astro Starter Kit: Basics
+# LA 10 Landing Page
 
-```sh
-npm create astro@latest -- --template basics
-```
+Landing page oficial para "LA 10", un club nocturno con presencia en varias ciudades de México. La página fue desarrollada utilizando **Astro 4.15.6** para crear una experiencia rápida y eficiente, con componentes reutilizables y un enfoque optimizado en la entrega de contenido estático.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Descripción del Proyecto
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+El proyecto presenta una estructura modular, con secciones clave como:
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- **Sección Fullscreen**: Muestra un video de bienvenida.
+- **Bloques de información**: Detalles sobre la experiencia en "LA 10".
+- **Galería de Imágenes**: Imágenes del ambiente del club.
+- **Noticias**: Seccion dinamica donde se leen eventos del CMS.
+- **Sucursales**: Información de contacto y ubicación de las sucursales.
 
-## 🚀 Project Structure
+La página es totalmente responsiva y optimizada para un rendimiento rápido.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Tecnologías Utilizadas
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- **Astro 4.15.6**: Framework estático que permite una carga eficiente y optimización automática del contenido.
+- **Contentful**: CMS que gestiona el contenido dinámico, permitiendo actualizaciones en tiempo real de las imágenes, textos y ubicaciones de las sucursales.
+- **CSS** y **JavaScript**: Estilos personalizados y funcionalidades interactivas.
+  
+El proyecto está preparado para futuras integraciones, como la inclusión de un blog administrado mediante Contentful y la mejora de la galería interactiva.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Despliegue
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Para el despliegue, se recomienda utilizar plataformas como **Vercel** o **Netlify**, optimizadas para aplicaciones desarrolladas con Astro.
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
