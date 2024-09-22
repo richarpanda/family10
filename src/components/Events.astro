@@ -1,0 +1,151 @@
+---
+import { contentfulClient } from "../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+
+interface EventosLa10 {
+    contentTypeId: "eventosLa10";
+    fields: {
+        titulo: string;
+        fecha: string;
+        descripcion: string;
+        imagen: {
+            fields: {
+                title: String;
+                description: String;
+                file: {
+                    url: String;
+                    fileName: String;
+                    contentType: String;
+                };
+            };
+        };
+    };
+}
+
+const events = await contentfulClient.getEntries<EventosLa10>({
+    content_type: "eventosLa10",
+});
+---
+
+<section id="news" class="eventos-section">
+    <div class="evento-container">
+        <div class="heading-text text-center">
+            <h3>
+                <strong>NOTICIAS</strong>
+            </h3>
+        </div>
+        <div class="eventos-grid">
+            {
+                events.items.map((event) => (
+                    <div class="evento-card">
+                        <img
+                            src={`https:${event.fields.imagen.fields.file.url}`}
+                            alt={event.fields.titulo}
+                            class="evento-imagen"
+                        />
+                        <div class="evento-contenido">
+                            <h3 class="evento-titulo">{event.fields.titulo}</h3>
+                            <p class="evento-descripcion">
+                                {
+                                    events.items[0].fields.descripcion
+                                        .content[0].content[0].value
+                                }
+                            </p>
+                            <p class="evento-fecha">
+                                {new Date(
+                                    event.fields.fecha,
+                                ).toLocaleDateString()}
+                            </p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .eventos-section {
+        padding: 3rem 0;
+    }
+    .evento-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .evento-titulo {
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #1f2937;
+    }
+    .eventos-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+    }
+    .evento-card {
+        background-color: white;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        transition: box-shadow 0.3s ease-in-out;
+        width: 100%;
+        max-width: 350px;
+        box-shadow:
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    .evento-imagen {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+    .evento-contenido {
+        padding: 1.5rem;
+    }
+    .evento-titulo {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0 0 0.75rem 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .evento-descripcion {
+        font-size: 1rem;
+        color: #4b5563;
+        margin-bottom: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .evento-fecha {
+        font-size: 0.875rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+    @media (min-width: 768px) {
+        .eventos-grid {
+            justify-content: center;
+        }
+        .evento-card {
+            width: calc(50% - 1rem);
+            max-width: 350px;
+        }
+    }
+    @media (min-width: 1024px) {
+        .eventos-grid {
+            justify-content: flex-start;
+        }
+        .evento-card {
+            width: calc(33.333% - 1.333rem);
+        }
+        .eventos-grid:only-child,
+        .eventos-grid:nth-last-child(2):first-child {
+            justify-content: center;
+        }
+    }
+</style>
