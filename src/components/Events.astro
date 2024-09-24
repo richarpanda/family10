@@ -26,6 +26,8 @@ interface EventosLa10 {
 const events = await contentfulClient.getEntries<EventosLa10>({
     content_type: "eventosLa10",
 });
+
+console.log(events.items[0].fields.descripcion.content);
 ---
 
 <section id="news" class="eventos-section">
@@ -60,7 +62,7 @@ const events = await contentfulClient.getEntries<EventosLa10>({
                                         <p class="evento-descripcion">
                                             {documentToHtmlString(
                                                 event.fields.descripcion,
-                                            )}
+                                            ).replace(/<p>|<\/p>/g, '')}
                                         </p>
                                     )}
                                     {event.fields.fecha && (
