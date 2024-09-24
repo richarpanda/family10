@@ -1,21 +1,22 @@
 ---
 import { contentfulClient } from "../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { Document } from "@contentful/rich-text-types";
 
 interface EventosLa10 {
     contentTypeId: "eventosLa10";
     fields: {
         titulo: string;
         fecha: string;
-        descripcion: string;
+        descripcion: Document;
         imagen: {
             fields: {
-                title: String;
-                description: String;
+                title: string;
+                description: string;
                 file: {
-                    url: String;
-                    fileName: String;
-                    contentType: String;
+                    url: string;
+                    fileName: string;
+                    contentType: string;
                 };
             };
         };
@@ -30,37 +31,54 @@ const events = await contentfulClient.getEntries<EventosLa10>({
 <section id="news" class="eventos-section">
     <div class="evento-container">
         <div class="heading-text text-center">
-            <h3>
-                <strong>NOTICIAS</strong>
-            </h3>
+            <h3><strong>NOTICIAS</strong></h3>
         </div>
-        <div class="eventos-grid">
-            {
-                events.items.map((event) => (
-                    <div class="evento-card">
-                        <img
-                            src={`https:${event.fields.imagen.fields.file.url}`}
-                            alt={event.fields.titulo}
-                            class="evento-imagen"
-                        />
-                        <div class="evento-contenido">
-                            <h3 class="evento-titulo">{event.fields.titulo}</h3>
-                            <p class="evento-descripcion">
-                                {
-                                    events.items[0].fields.descripcion
-                                        .content[0].content[0].value
-                                }
-                            </p>
-                            <p class="evento-fecha">
-                                {new Date(
-                                    event.fields.fecha,
-                                ).toLocaleDateString()}
-                            </p>
-                        </div>
-                    </div>
-                ))
-            }
-        </div>
+
+        {
+            events.items && events.items.length > 0 ? (
+                <div class="eventos-grid">
+                    {events.items.map(
+                        (event: { fields: EventosLa10["fields"] }) => (
+                            <div class="evento-card">
+                                {event.fields.imagen?.fields?.file?.url && (
+                                    <img
+                                        src={`https:${event.fields.imagen.fields.file.url}`}
+                                        alt={
+                                            event.fields.imagen.fields.title ||
+                                            "Evento imagen"
+                                        }
+                                        class="evento-imagen"
+                                    />
+                                )}
+                                <div class="evento-contenido">
+                                    {event.fields.titulo && (
+                                        <h3 class="evento-titulo">
+                                            {event.fields.titulo}
+                                        </h3>
+                                    )}
+                                    {event.fields.descripcion && (
+                                        <p class="evento-descripcion">
+                                            {documentToHtmlString(
+                                                event.fields.descripcion,
+                                            )}
+                                        </p>
+                                    )}
+                                    {event.fields.fecha && (
+                                        <p class="evento-fecha">
+                                            {new Date(
+                                                event.fields.fecha,
+                                            ).toLocaleDateString()}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        ),
+                    )}
+                </div>
+            ) : (
+                <p>No hay eventos disponibles en este momento.</p>
+            )
+        }
     </div>
 </section>
 
@@ -73,12 +91,8 @@ const events = await contentfulClient.getEntries<EventosLa10>({
         margin: 0 auto;
         padding: 0 1rem;
     }
-    .evento-titulo {
-        font-size: 2rem;
-        font-weight: bold;
-        text-align: center;
+    .heading-text {
         margin-bottom: 2rem;
-        color: #1f2937;
     }
     .eventos-grid {
         display: flex;
@@ -142,10 +156,6 @@ const events = await contentfulClient.getEntries<EventosLa10>({
         }
         .evento-card {
             width: calc(33.333% - 1.333rem);
-        }
-        .eventos-grid:only-child,
-        .eventos-grid:nth-last-child(2):first-child {
-            justify-content: center;
         }
     }
 </style>
